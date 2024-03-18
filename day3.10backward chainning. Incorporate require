@@ -1,0 +1,49 @@
+Write a Prolog program to implement Monkey Banana Problem 
+% Initial state: monkey is at the door, chair is at the middle of the room,
+% and banana is hanging from the ceiling.
+at(door, s0).
+at(chair, s0).
+at(banana, s0).
+
+% Actions available to the monkey.
+% move(X, Y): move from X to Y.
+% climb(X): climb on object X.
+% grasp(X): grasp object X.
+action(move(X, Y), s0, s1) :-
+    at(X, s0),
+    connected(X, Y).
+
+action(climb(X), s0, s1) :-
+    at(X, s0),
+    on_floor(s0),
+    clear(X).
+
+action(grasp(X), s0, s1) :-
+    at(X, s0),
+    on_floor(s0),
+    holding(s0, X).
+
+% Define the problem-solving goal: getting the banana.
+goal_state(s1) :-
+    holding(s1, banana).
+
+% Define the state transitions.
+% A state transition is possible if the action is applicable in the current state.
+% The result is the next state.
+result(A, S, S1) :-
+    action(A, S, S1).
+
+% Define connected rooms or objects.
+connected(door, chair).
+connected(chair, middle).
+connected(middle, banana).
+
+% Define predicates to check if an object is clear or the monkey is on the floor.
+clear(X) :-
+    \+ holding(s0, X).
+
+on_floor(s0).
+
+% Define holding predicate.
+holding(s1, X) :-
+    action(grasp(X), s0, s1).
