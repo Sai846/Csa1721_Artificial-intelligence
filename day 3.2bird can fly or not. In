@@ -1,0 +1,40 @@
+Write a Prolog Program to suggest Dieting System based on Disease. 
+
+% Facts about foods and their glycemic index (GI).
+food_gi(apple, 38).
+food_gi(banana, 51).
+food_gi(carrot, 35).
+food_gi(rice, 73).
+food_gi(bread, 70).
+food_gi(pasta, 45).
+food_gi(chocolate, 49).
+food_gi(cookies, 57).
+
+% Diet plan suggestions for diabetes.
+diet_suggestion(diabetes, [apple, carrot, pasta]).
+
+% Rules to suggest a diet based on disease.
+suggest_diet(Disease, Diet) :-
+    diet_suggestion(Disease, Diet),
+    write('Recommended diet for '), write(Disease), write(': '), write(Diet), nl.
+
+% Rules to check if a food is suitable based on glycemic index (GI).
+is_suitable_food(Food, GI) :-
+    GI =< 55,
+    write(Food), write(' is a low GI food.'), nl.
+
+is_suitable_food(Food, GI) :-
+    GI > 55,
+    write(Food), write(' is a high GI food. Avoid in excess.'), nl.
+
+% Predicate to check the suitability of foods for a specific disease.
+check_food_suitability(Disease) :-
+    diet_suggestion(Disease, Diet),
+    write('Checking suitability of foods for '), write(Disease), write(':'), nl,
+    check_food_suitability_helper(Diet).
+
+check_food_suitability_helper([]).
+check_food_suitability_helper([Food|Rest]) :-
+    ,
+    is_suitable_food(Food, GI),
+    check_food_suitability_helper(Rest).
