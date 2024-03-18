@@ -1,0 +1,25 @@
+% Facts
+student(john).
+student(alice).
+student(bob).
+
+teacher(mary).
+teacher(peter).
+teacher(susan).
+
+subject(math).
+subject(science).
+subject(history).
+
+% Relationships
+teaches(mary, math).
+teaches(peter, science).
+teaches(susan, history).
+
+enrolled(john, math).
+enrolled(alice, science).
+enrolled(bob, history).
+
+% Rules
+teaching_subject(Teacher, Subject) :- teaches(Teacher, Subject).
+student_enrolled_in(Student, Subject) :- enrolled(Student, Subject).

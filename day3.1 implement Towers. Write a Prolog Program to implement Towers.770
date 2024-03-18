@@ -1,0 +1,27 @@
+% hanoi(+N, +Start, +End, +Extra)
+% This predicate represents the solution to the Tower of Hanoi problem.
+% N: Number of disks
+% Start: The starting peg
+% End: The ending peg
+% Extra: The auxiliary peg
+
+hanoi(1, Start, End, _) :-
+    format('Move disk from ~w to ~w~n', [Start, End]).
+
+hanoi(N, Start, End, Extra) :-
+    N > 1,
+    M is N - 1,
+    hanoi(M, Start, Extra, End),
+    hanoi(1, Start, End, _),
+    hanoi(M, Extra, End, Start).
+
+output:
+?- hanoi(3, left, middle, right).
+Move disk from left to right
+Move disk from left to middle
+Move disk from right to middle
+Move disk from left to right
+Move disk from middle to left
+Move disk from middle to right
+Move disk from left to right
+true.
