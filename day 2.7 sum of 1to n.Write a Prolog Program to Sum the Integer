@@ -1,0 +1,45 @@
+import numpy as np
+
+class FeedForwardNN:
+    def __init__(self, input_size, hidden_size, output_size):
+        self.input_size = input_size
+        self.hidden_size = hidden_size
+        self.output_size = output_size
+
+        # Initialize weights and biases
+        self.weights_input_hidden = np.random.randn(input_size, hidden_size)
+        self.biases_input_hidden = np.random.randn(1, hidden_size)
+        self.weights_hidden_output = np.random.randn(hidden_size, output_size)
+        self.biases_hidden_output = np.random.randn(1, output_size)
+
+    def forward(self, inputs):
+        # Calculate output of hidden layer
+        self.hidden_output = np.dot(inputs, self.weights_input_hidden) + self.biases_input_hidden
+        self.hidden_output = self.sigmoid(self.hidden_output)
+
+        # Calculate output of output layer
+        self.output = np.dot(self.hidden_output, self.weights_hidden_output) + self.biases_hidden_output
+        self.output = self.sigmoid(self.output)
+
+        return self.output
+
+    def sigmoid(self, x):
+        return 1 / (1 + np.exp(-x))
+
+# Example usage
+input_size = 2
+hidden_size = 3
+output_size = 1
+
+# Create a feedforward neural network
+model = FeedForwardNN(input_size, hidden_size, output_size)
+
+# Input data
+X = np.array([[0, 0],
+              [0, 1],
+              [1, 0],
+              [1, 1]])
+
+# Forward pass
+output = model.forward(X)
+print("Output:", output)
